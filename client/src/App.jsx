@@ -6,8 +6,10 @@ function App() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const API_URL = "https://url-shortner-95kg.onrender.com";
+
   const shortenUrl = async (e) => {
-    // Prevents default page reload on form submission
+    // Prevent page reload on form submission
     e.preventDefault();
 
     // Basic frontend validation
@@ -21,12 +23,14 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/shorten", {
+      const response = await fetch(`${API_URL}/shorten`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ originalUrl: url }),
+        body: JSON.stringify({
+          originalUrl: url,
+        }),
       });
 
       const data = await response.json();
@@ -36,23 +40,23 @@ function App() {
       }
 
       setShortCode(data.shortCode);
-      // Optional: setUrl("") to clear input after success
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
-      // Always stop the loading spinner, even if it fails
+      // Always stop loading
       setIsLoading(false);
     }
   };
+
+  const shortUrl = `${API_URL}/${shortCode}`;
 
   return (
     <div className="container">
       <h1>URL Shortener</h1>
 
-      {/* Replaced generic div with a semantic form element */}
       <form className="form" onSubmit={shortenUrl}>
         <input
-          type="url" // Triggers appropriate mobile keyboard and basic HTML5 validation
+          type="url"
           placeholder="Enter URL"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -70,12 +74,9 @@ function App() {
       {shortCode && !error && (
         <div className="result">
           <p>Short URL:</p>
-          <a
-            href={`http://localhost:5000/${shortCode}`}
-            target="_blank"
-            rel="noopener noreferrer" // Security best practice
-          >
-            http://localhost:5000/{shortCode}
+
+          <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+            {shortUrl}
           </a>
         </div>
       )}
