@@ -4,84 +4,346 @@
   padding: 0;
 }
 
+:root {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  min-width: 320px;
   min-height: 100vh;
+  background: #f8fafc;
 }
 
-.container {
-  width: 100%;
-  max-width: 700px;
-
-  background: white;
-
-  padding: 35px;
-
-  border-radius: 16px;
-
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.form {
-  display: flex;
-  gap: 10px;
-}
-
+button,
 input {
-  flex: 1;
-
-  padding: 12px;
-
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  font: inherit;
 }
 
 button {
-  padding: 12px 20px;
-
-  border: none;
-  border-radius: 8px;
-
-  background: #2563eb;
-  color: white;
-
   cursor: pointer;
 }
 
-button:hover {
-  background: #1d4ed8;
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.result {
-  margin-top: 25px;
-
-  padding: 20px;
-
-  background: #f8fafc;
-
-  border-radius: 10px;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.22);
+  outline-offset: 2px;
 }
 
-.result a {
-  display: inline-block;
-  margin: 8px 0;
+.app-shell {
+  min-height: 100vh;
+}
 
-  color: #2563eb;
+.topbar {
+  width: min(900px, calc(100% - 36px));
+  min-height: 64px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 18px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+.brand {
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.topbar-label {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.page-content {
+  width: min(900px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 72px 0 64px;
+}
+
+.shortener-section {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin-bottom: 9px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  max-width: 640px;
+  font-size: clamp(30px, 4vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 650;
+}
+
+.intro {
+  max-width: 620px;
+  margin-top: 12px;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.shorten-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.shorten-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 15px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.shorten-form input::placeholder {
+  color: #94a3b8;
+}
+
+.shorten-form input:hover {
+  border-color: #94a3b8;
+}
+
+.shorten-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+.shorten-form button,
+.copy-button,
+.recent-copy-button {
+  border: 1px solid #cab287;
+  border-radius: 7px;
+  background: #cab287;
+  color: #ffffff;
+  font-weight: 650;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.shorten-form button {
+  min-height: 48px;
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+.shorten-form button:hover:not(:disabled),
+.copy-button:hover:not(:disabled),
+.recent-copy-button:hover:not(:disabled) {
+  border-color: #9d8854;
+  background: #9d8854;
 }
 
 .error {
-  margin-top: 15px;
+  margin-top: 12px;
+  color: #b91c1c;
+  font-size: 14px;
+  line-height: 1.5;
+}
 
-  color: red;
+.result-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.result-label {
+  margin-bottom: 6px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.short-url,
+.recent-short-url {
+  color: #2563eb;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.short-url {
+  font-size: 15px;
+}
+
+.short-url:hover,
+.recent-short-url:hover {
+  text-decoration: underline;
+}
+
+.copy-button {
+  flex: 0 0 auto;
+  min-width: 82px;
+  min-height: 40px;
+  padding: 0 14px;
+}
+
+.recent-section {
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  color: #0f172a;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+.link-count {
+  color: #64748b;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.recent-list {
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 16px;
+}
+
+.recent-item + .recent-item {
+  border-top: 1px solid #e2e8f0;
+}
+
+.recent-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recent-short-url {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.original-url {
+  max-width: 100%;
+  overflow: hidden;
+  color: #64748b;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-copy-button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 0 18px;
+  }
+
+  .topbar-label {
+    display: none;
+  }
+
+  .page-content {
+    width: min(100% - 28px, 760px);
+    padding: 48px 0 42px;
+  }
+
+  .shorten-form {
+    grid-template-columns: 1fr;
+  }
+
+  .shorten-form button {
+    width: 100%;
+  }
+
+  .result-section {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .copy-button {
+    width: 100%;
+  }
+
+  .recent-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .recent-copy-button {
+    width: 100%;
+  }
 }
